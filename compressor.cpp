@@ -1,4 +1,5 @@
 #include <vector>
+#include <cstring>
 #include "compressor.h"
 #include "lzhash.h"
 #include "lz77.h"
