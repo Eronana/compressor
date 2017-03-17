@@ -13,6 +13,11 @@ make
 ./main
 ```
 
+## Help
+```
+./main -h
+```
+
 ## Test
 ```
 ./test.sh test.txt
