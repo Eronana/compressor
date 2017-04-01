@@ -15,7 +15,7 @@ void usage(char *e)
     puts("  options:");
     puts("    c: compression");
     puts("    x: uncompression");
-    printf("    level: compression level. 0 for store, %lu for highest compression ratio. default is %d\n",SIZEOF(config),DEFAULT_LEVEL);
+    printf("    level: compression level. 0 for store, %lu for highest compression ratio. default is %d\n",SIZEOF(config)-1,DEFAULT_LEVEL);
     printf("    lazy : set max lazy match, default is %d\n",config[DEFAULT_LEVEL].lazy_match);
     printf("    chain: set max length of find in hash chain, default is %d\n",config[DEFAULT_LEVEL].max_chain);
     puts("    lazy and chain will be ignored if you setted level");
