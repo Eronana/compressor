@@ -3,7 +3,7 @@
 
 typedef unsigned char BYTE;
 typedef unsigned short WORD;
-typedef unsigned int DWORD;
+typedef unsigned long DWORD;
 
 const int MAX_WINDOW_SIZE = (WORD)0xFFFFFFFF - 256;
 const int MIN_REPEAT_LENGTH = 3;
