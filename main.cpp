@@ -73,8 +73,8 @@ int main(int argc,char **argv)
         puts("compressing...");
         DWORD compressed_size=compress(buffer,src,src_size,c.lazy_match,c.max_chain);
         puts("compression is complete");
-        printf("original size: %lu\n",src_size);
-        printf("compressed size: %lu\n",compressed_size+4);
+        printf("original size: %u\n",src_size);
+        printf("compressed size: %u\n",compressed_size+4);
         printf("compression ratio: %.2f%%\n",(compressed_size+4)*100.0/src_size);
         fwrite(&src_size,4,1,dest_fp);
         fwrite(buffer,compressed_size,1,dest_fp);
@@ -88,9 +88,9 @@ int main(int argc,char **argv)
         puts("uncompressing...");
         uncompress(buffer,src+4);
         puts("uncompression is complete");
-        printf("original size: %lu\n",original_size);
-        printf("compressed size: %lu\n",src_size);
-        printf("compression ratio: %.2f\n",float(src_size)/original_size);
+        printf("original size: %u\n",original_size);
+        printf("compressed size: %u\n",src_size);
+        printf("compression ratio: %.2f%%\n",src_size*100.0/original_size);
         fwrite(buffer,original_size,1,dest_fp);
         fclose(dest_fp);
         puts("saved.");
