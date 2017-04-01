@@ -3,7 +3,7 @@ RM=rm -f
 CPPFLAGS=-O2 -Wall -std=c++11
 
 
-SRCS=main.cpp compressor.cpp uncompressor.cpp lzhash.cpp bitstream.cpp lz77.cpp huffman.cpp
+SRCS=main.cpp utils.cpp config.cpp compressor.cpp uncompressor.cpp lzhash.cpp bitstream.cpp lz77.cpp huffman.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 all: main

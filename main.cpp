@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
-#include <cstring>
-#include "main.h"
+#include "utils.h"
+#include "compressor.h"
 
 void usage(char *e)
 {
@@ -15,32 +15,11 @@ void usage(char *e)
     puts("  options:");
     puts("    c: compression");
     puts("    x: uncompression");
-    printf("    level: compression level. 0 for store, %lu for highest compression ratio. default is %d\n",SIZEOF(config)-1,DEFAULT_LEVEL);
+    printf("    level: compression level. 0 for store, %lu for highest compression ratio. default is %d\n",config_count-1,DEFAULT_LEVEL);
     printf("    lazy : set max lazy match, default is %d\n",config[DEFAULT_LEVEL].lazy_match);
     printf("    chain: set max length of find in hash chain, default is %d\n",config[DEFAULT_LEVEL].max_chain);
     puts("    lazy and chain will be ignored if you setted level");
     exit(1);
-}
-
-int get_options(int argc,char **argv,const char *option)
-{
-    for(int i=1;i<argc;i++)if(argv[i][0]=='-'&&!strcmp(argv[i]+1,option))return i;
-    return 0;
-}
-Config get_config(int argc,char **argv)
-{
-    int r;
-    if((r=get_options(argc,argv,"level")))
-    {
-        int level=atoi(argv[r+1]);
-        if(level<0)level=0;
-        if(level>=SIZEOF(config))level=SIZEOF(config)-1;
-        return config[level];
-    }
-    Config c=config[DEFAULT_LEVEL];
-    if((r=get_options(argc,argv,"lazy")))c.lazy_match=atoi(argv[r+1]);
-    if((r=get_options(argc,argv,"chain")))c.max_chain=atoi(argv[r+1]);
-    return c;
 }
 
 int main(int argc,char **argv)
