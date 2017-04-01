@@ -13,11 +13,11 @@ DWORD getBufferSize(DWORD size)
     return size;
 }
 
-DWORD compress(BYTE *dest, BYTE *src,DWORD size,int lazy_match,int prev_length)
+DWORD compress(BYTE *dest, BYTE *src,DWORD size,int lazy_match,int max_chain)
 {
     std::vector<WORD> d_buf;
     std::vector<BYTE> l_buf;
-    lz77(d_buf,l_buf,(BYTE*)src,size,lazy_match,prev_length);
+    lz77(d_buf,l_buf,(BYTE*)src,size,lazy_match,max_chain);
 
     std::vector<WORD> tree;
     std::vector<LenSizeType> len_size;

@@ -9,16 +9,16 @@ void usage(char *e)
     puts("  compression:");
     printf("    %s test.txt.compressed test.txt -c\n",e);
     printf("    %s test.txt.compressed test.txt -c -level 5\n",e);
-    printf("    %s test.txt.compressed test.txt -c -lazy 128 -prev 100\n",e);
+    printf("    %s test.txt.compressed test.txt -c -lazy 128 -chain 100\n",e);
     puts("  uncompression:");
     printf("    %s test.txt test.txt.compressed -x\n",e);
     puts("  options:");
     puts("    c: compression");
     puts("    x: uncompression");
     printf("    level: compression level. 0 for store, %lu for highest compression ratio. default is %d\n",SIZEOF(config),DEFAULT_LEVEL);
-    printf("    lazy: set max lazy match, default is %d\n",config[DEFAULT_LEVEL].lazy_match);
-    printf("    prev: set max find length of hash prev link, default is %d\n",config[DEFAULT_LEVEL].prev_length);
-    puts("    lazy and prev will be ignored if you setted level");
+    printf("    lazy : set max lazy match, default is %d\n",config[DEFAULT_LEVEL].lazy_match);
+    printf("    chain: set max length of find in hash chain, default is %d\n",config[DEFAULT_LEVEL].max_chain);
+    puts("    lazy and chain will be ignored if you setted level");
     exit(1);
 }
 
@@ -39,7 +39,7 @@ Config get_config(int argc,char **argv)
     }
     Config c=config[DEFAULT_LEVEL];
     if((r=get_options(argc,argv,"lazy")))c.lazy_match=atoi(argv[r+1]);
-    if((r=get_options(argc,argv,"prev")))c.prev_length=atoi(argv[r+1]);
+    if((r=get_options(argc,argv,"chain")))c.max_chain=atoi(argv[r+1]);
     return c;
 }
 
@@ -92,7 +92,7 @@ int main(int argc,char **argv)
         Config c=get_config(argc,argv);
         BYTE *buffer=new BYTE[getBufferSize(src_size)];
         puts("compressing...");
-        DWORD compressed_size=compress(buffer,src,src_size,c.lazy_match,c.prev_length);
+        DWORD compressed_size=compress(buffer,src,src_size,c.lazy_match,c.max_chain);
         puts("compression is complete");
         printf("original size: %u\n",src_size);
         printf("compressed size: %u\n",compressed_size+4);

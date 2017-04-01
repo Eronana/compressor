@@ -5,10 +5,10 @@
 struct Config
 {
     int lazy_match;
-    int prev_length;
+    int max_chain;
 };
 Config config[]={
-    // lazy_match, prev_length
+    // lazy_match, max_chain
     {0,0}, // store
     {2,5},
     {4,10},
