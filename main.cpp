@@ -71,13 +71,14 @@ int main(int argc,char **argv)
         Config c=get_config(argc,argv);
         BYTE *buffer=new BYTE[getBufferSize(src_size)];
         puts("compressing...");
-        DWORD compressed_size=compress(buffer,src,src_size,c.lazy_match,c.max_chain);
+        auto result=compress(buffer,src,src_size,c.lazy_match,c.max_chain);
         puts("compression is complete");
+        printf("node total: %u\n",result.node_total);
         printf("original size: %u\n",src_size);
-        printf("compressed size: %u\n",compressed_size+4);
-        printf("compression ratio: %.2f%%\n",(compressed_size+4)*100.0/src_size);
+        printf("compressed size: %u\n",result.compressed_size+4);
+        printf("compression ratio: %.2f%%\n",(result.compressed_size+4)*100.0/src_size);
         fwrite(&src_size,4,1,dest_fp);
-        fwrite(buffer,compressed_size,1,dest_fp);
+        fwrite(buffer,result.compressed_size,1,dest_fp);
         fclose(dest_fp);
         puts("saved.");
     }

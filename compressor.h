@@ -16,8 +16,12 @@ struct LenSizeType
 {
     WORD len,size;
 };
-
+struct CompressResult
+{
+    DWORD compressed_size;
+    DWORD node_total;
+};
 DWORD getBufferSize(DWORD size);
-DWORD compress(BYTE *dest, BYTE *src,DWORD size,int lazy_match,int prev_length);
+CompressResult compress(BYTE *dest, BYTE *src,DWORD size,int lazy_match,int prev_length);
 void uncompress(BYTE *dest,BYTE *src);
 #endif

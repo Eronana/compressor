@@ -43,7 +43,7 @@ struct BitCode
     int code;
 };
 
-void huffman(
+size_t huffman(
     std::vector<WORD> &d_buf, std::vector<BYTE> &l_buf,
     std::vector<WORD> &tree,
     std::vector<LenSizeType> &len_size,
@@ -54,6 +54,7 @@ void huffman(
     for(auto x:l_buf)mp[x]++;
 
     std::priority_queue<Node*,std::vector<Node*>,Node_CMP> pq;
+    size_t node_total=mp.size();
     for(auto &x:mp) pq.push(new Node(x.first,x.second));
     
     while(pq.size()>1)
@@ -61,6 +62,7 @@ void huffman(
         Node *left=pq.top();pq.pop();
         Node *right=pq.top();pq.pop();
         pq.push(new Node(left,right));
+        node_total++;
     }
 
     std::map<WORD,std::vector<int>> code_tree;
@@ -87,4 +89,5 @@ void huffman(
     for(auto x:d_buf)bitStream.put(bitCode[x].code,bitCode[x].len);
     for(auto x:l_buf)bitStream.put(bitCode[x].code,bitCode[x].len);
     bitStream.end();
+    return node_total;
 }

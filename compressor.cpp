@@ -13,7 +13,7 @@ DWORD getBufferSize(DWORD size)
     return size;
 }
 
-DWORD compress(BYTE *dest, BYTE *src,DWORD size,int lazy_match,int max_chain)
+CompressResult compress(BYTE *dest, BYTE *src,DWORD size,int lazy_match,int max_chain)
 {
     std::vector<WORD> d_buf;
     std::vector<BYTE> l_buf;
@@ -22,7 +22,7 @@ DWORD compress(BYTE *dest, BYTE *src,DWORD size,int lazy_match,int max_chain)
     std::vector<WORD> tree;
     std::vector<LenSizeType> len_size;
     std::vector<BYTE> bit_stream;
-    huffman(d_buf,l_buf,tree,len_size,bit_stream);
+    size_t node_total = huffman(d_buf,l_buf,tree,len_size,bit_stream);
 
     WORD tree_size=tree.size();
     WORD len_size_size=len_size.size();
@@ -48,5 +48,8 @@ DWORD compress(BYTE *dest, BYTE *src,DWORD size,int lazy_match,int max_chain)
     memcpy(dest,&bit_stream[0],bit_stream_size);
 
     dest+=bit_stream_size;
-    return dest-dest_bak;
+    return {
+        static_cast<DWORD>(dest-dest_bak),
+        static_cast<DWORD>(node_total)
+    };
 }
