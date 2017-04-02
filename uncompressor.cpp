@@ -1,10 +1,6 @@
 #include "compressor.h"
+#include "uncompressor.h"
 
-struct HNode
-{
-    int value;
-    HNode *child[2];
-};
 HNode *newHNode()
 {
     HNode *n=new HNode;
